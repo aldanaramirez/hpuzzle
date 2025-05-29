@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      LinearExpr
       Puzzle
   other-modules:
       Paths_hpuzzle
@@ -35,6 +36,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , containers
   default-language: Haskell2010
 
 executable hpuzzle-exe
@@ -48,6 +50,7 @@ executable hpuzzle-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
     , hpuzzle
   default-language: Haskell2010
 
@@ -55,6 +58,7 @@ test-suite hpuzzle-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      LinearExprSpec
       Paths_hpuzzle
   autogen-modules:
       Paths_hpuzzle
@@ -63,5 +67,8 @@ test-suite hpuzzle-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
     , hpuzzle
+    , hspec
+    , hspec-discover
   default-language: Haskell2010
