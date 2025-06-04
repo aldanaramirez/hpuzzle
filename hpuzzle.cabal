@@ -37,6 +37,8 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , csp
+    , mtl
   default-language: Haskell2010
 
 executable hpuzzle-exe
@@ -51,7 +53,9 @@ executable hpuzzle-exe
   build-depends:
       base >=4.7 && <5
     , containers
+    , csp
     , hpuzzle
+    , mtl
   default-language: Haskell2010
 
 test-suite hpuzzle-test
@@ -59,6 +63,7 @@ test-suite hpuzzle-test
   main-is: Spec.hs
   other-modules:
       LinearExprSpec
+      PuzzleSpec
       Paths_hpuzzle
   autogen-modules:
       Paths_hpuzzle
@@ -68,7 +73,9 @@ test-suite hpuzzle-test
   build-depends:
       base >=4.7 && <5
     , containers
+    , csp
     , hpuzzle
     , hspec
     , hspec-discover
+    , mtl
   default-language: Haskell2010
