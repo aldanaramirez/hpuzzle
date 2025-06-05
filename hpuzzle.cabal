@@ -44,6 +44,7 @@ library
 executable hpuzzle-exe
   main-is: Main.hs
   other-modules:
+      Sudoku
       Paths_hpuzzle
   autogen-modules:
       Paths_hpuzzle
