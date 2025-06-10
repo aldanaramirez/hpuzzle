@@ -12,22 +12,14 @@ playSudoku = do
     -- Solve puzzle
     putStrLn "Solving sudoku grid ..."
     case allSol (sudoku grid) of
-        []      -> putStrLn "No solution exist for the given sudoku grid"
-        [sol]   -> putStrLn "Unique solution: " >> prettyPrintSudoku sol
-        (sol:_) -> putStrLn "One of several solutions: " >> prettyPrintSudoku sol
+        []      -> putStrLn "Malformed sudoku grid"
+        [sol]   -> putStrLn "Solution:" >> prettyPrintSudoku sol
+        (sol:_) -> putStrLn "This sudoku allows more than one solution! One solution is:" >> prettyPrintSudoku sol
 
--- Parses a sudoku grid
-parseSudokuGrid :: String -> [Maybe Int]
-parseSudokuGrid input = map parseChar $ concat $ lines input
-  where
-    parseChar '.' = Nothing
-    parseChar c   = Just (read [c])
-
--- Specifies the rules for a sudoku puzzle
+-- The Sudoku puzzle
 sudoku :: [Maybe Int] -> CSPPuzzle [Var]
 sudoku grid = do
-    -- Create a variable with singleton or full domain according to whether 
-    -- the cell value is known or not.
+    -- Create a variable with singleton or full domain according to cell data.
     vs <- mapM (\val -> newVar (if isNothing val then [1..9] else [fromMaybe 0 val])) grid
     -- Ensure that elements in each row, column, and subgrid are all different.
     mapM_ allDiff $ rows vs ++ cols vs ++ subg vs
@@ -39,6 +31,13 @@ rows, cols, subg :: [a] -> [[a]]
 rows xs = [[xs!!j | j <- [0..80], j < 9*(i+1), j >= 9*i] | i<-[0..8]]
 cols xs = [[xs!!j | j <- [0..80], mod j 9 == i]  | i<-[0..8]]
 subg xs = [[xs!!k | k <- [0..80], mod k 9 `elem` [i,i+1,i+2], k < (j+1)*3*9, k >= j*3*9 ] | i <- [0,3,6], j <- [0,1,2]]
+
+-- Parses a sudoku grid
+parseSudokuGrid :: String -> [Maybe Int]
+parseSudokuGrid input = map parseChar $ concat $ lines input
+  where
+    parseChar '.' = Nothing
+    parseChar c   = Just (read [c])
 
 -- Pretty prints a sudoku solution
 prettyPrintSudoku :: [Int] -> IO ()
